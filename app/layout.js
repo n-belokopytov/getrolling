@@ -1,9 +1,8 @@
 import './globals.css';
 
-export const metadata = {
-  title: 'GetRolling.tech',
-  description: 'Engineering systems that actually move.',
-};
+import { SITE_METADATA } from './constants';
+
+export const metadata = SITE_METADATA;
 
 export default function RootLayout({ children }) {
   return (
