@@ -80,6 +80,152 @@ body a {
   padding: 48px 0 72px;
 }
 
+.hero-full {
+  max-width: 900px;
+}
+
+.hero-title {
+  margin: 16px 0 0;
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+}
+
+.hero-title-line {
+  display: inline;
+}
+
+.proof-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 36px;
+}
+
+.proof-item {
+  flex: 1 1 140px;
+  min-width: 0;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(17, 17, 17, 0.75);
+}
+
+.proof-stat {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.proof-label {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.for-not-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.for-card {
+  border-left: 3px solid #e4e4e7;
+}
+
+.not-card {
+  border-left: 3px solid #52525b;
+}
+
+.for-not-heading {
+  margin: 0 0 12px;
+  font-size: 1.15rem;
+}
+
+.startup-icp {
+  margin-top: 0;
+}
+
+.outcomes-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.case-studies {
+  display: grid;
+  gap: 16px;
+}
+
+.case-study h3 {
+  margin-top: 0;
+}
+
+.case-kicker {
+  font-weight: 600;
+  color: #d4d4d8;
+}
+
+.case-results {
+  margin-top: 16px;
+}
+
+.metric-list li {
+  font-weight: 500;
+}
+
+.engagement-duration {
+  margin: 8px 0 16px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.engagement-output {
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+
+.about-section .section-head {
+  margin-bottom: 16px;
+}
+
+.about-body {
+  max-width: 720px;
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #d4d4d8;
+}
+
+.about-note {
+  margin-top: 16px;
+  font-size: 0.95rem;
+}
+
+.cta-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+  width: 100%;
+  max-width: 320px;
+}
+
+.cta-buttons .button {
+  text-align: center;
+}
+
+.button.secondary-on-light {
+  background: transparent;
+  color: var(--dark);
+  border-color: rgba(9, 9, 11, 0.35);
+}
+
 .two-col {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
@@ -274,7 +420,8 @@ h3 {
   .cta,
   .cards.three,
   .cards.two,
-  .tag-grid {
+  .tag-grid,
+  .for-not-grid {
     grid-template-columns: 1fr;
   }
 
