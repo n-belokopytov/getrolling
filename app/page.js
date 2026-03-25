@@ -9,6 +9,7 @@ import { DifferentiatorSection } from './components/sections/differentiator-sect
 import { EngagementsSection } from './components/sections/engagements-section';
 import { FitCheckSection } from './components/sections/fit-check-section';
 import { HeroSection } from './components/sections/hero-section';
+import { TestimonialsSection } from './components/sections/testimonials-section';
 import { WhoSection } from './components/sections/who-section';
 import {
   BOOKING_URL,
@@ -21,9 +22,12 @@ import {
   ENGAGEMENTS_SECTION,
   HERO,
   NAV_LINKS,
+  OWNER_PROFILE,
   PROOF_NOTE,
   PROOF_METRICS,
   QUALIFICATION_SECTION,
+  TESTIMONIALS,
+  TESTIMONIALS_SECTION,
   TRUSTED_COMPANIES_SECTION,
   WHO_SECTION,
 } from './constants';
@@ -38,6 +42,8 @@ export default function HomePage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isFitCheckOpen, setIsFitCheckOpen] = useState(false);
   const [contactForm, setContactForm] = useState(INITIAL_CONTACT_FORM);
+  const [contactHoneypot, setContactHoneypot] = useState('');
+  const [contactFormStartedAt, setContactFormStartedAt] = useState(() => Date.now());
   const [contactErrors, setContactErrors] = useState({});
   const [contactStatus, setContactStatus] = useState({
     type: 'idle',
@@ -172,6 +178,8 @@ export default function HomePage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...contactForm,
+          website: contactHoneypot,
+          formStartedAt: contactFormStartedAt,
           fitCheck: {
             isSubmitted,
             answeredCount,
@@ -189,10 +197,14 @@ export default function HomePage() {
 
       setContactStatus({
         type: 'success',
-        message: payload?.message || 'Thanks. You will get a direct reply shortly.',
+        message:
+          payload?.message ||
+          'Thanks. Request received. You should get a direct reply with next steps shortly.',
       });
       setContactErrors({});
       setContactForm(INITIAL_CONTACT_FORM);
+      setContactHoneypot('');
+      setContactFormStartedAt(Date.now());
       trackEvent('contact_submit_success');
     } catch (error) {
       setContactStatus({
@@ -227,6 +239,7 @@ export default function HomePage() {
           scrollToContact();
           setIsNavOpen(false);
         }}
+        ownerProfile={OWNER_PROFILE}
         onToggleNav={() => setIsNavOpen((prev) => !prev)}
       />
 
@@ -245,6 +258,11 @@ export default function HomePage() {
       <CaseStudiesSection
         caseStudies={CASE_STUDIES}
         caseStudiesSection={CASE_STUDIES_SECTION}
+      />
+
+      <TestimonialsSection
+        testimonials={TESTIMONIALS}
+        testimonialsSection={TESTIMONIALS_SECTION}
       />
 
       <WhoSection whoSection={WHO_SECTION} />
@@ -275,10 +293,13 @@ export default function HomePage() {
       <ContactSection
         contactErrors={contactErrors}
         contactForm={contactForm}
+        contactHoneypot={contactHoneypot}
+        contactFormStartedAt={contactFormStartedAt}
         contactSection={CONTACT_SECTION}
         contactStatus={contactStatus}
         hasBookingCalendar={hasBookingCalendar}
         onContactFieldChange={handleContactFieldChange}
+        onContactHoneypotChange={setContactHoneypot}
         onContactSubmit={handleContactSubmit}
         trackEvent={trackEvent}
       />

@@ -1,3 +1,5 @@
+import { OWNER_PROFILE } from './owner';
+
 export const BRAND = {
   name: 'GetRolling',
   domainSuffix: '.tech',
@@ -7,5 +9,5 @@ export const BRAND = {
 export const SITE_METADATA = {
   title: `${BRAND.name}${BRAND.domainSuffix} | Delivery and Reliability, Hands-on`,
   description:
-    'Hands-on help for CTOs and product leaders. Ship faster, cut incidents, and fix ownership gaps.',
+    `${OWNER_PROFILE.fullName}, ${OWNER_PROFILE.role}. Hands-on help for CTOs and product leaders to ship faster, cut incidents, and fix ownership gaps.`,
 };

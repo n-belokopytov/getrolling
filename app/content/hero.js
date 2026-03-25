@@ -1,6 +1,9 @@
+import { OWNER_PROFILE } from './owner';
+
 export const HERO = {
   titleLine1: 'Ship faster with fewer outages,',
   titleLine2: 'without burning team capacity.',
+  support: `${OWNER_PROFILE.fullName} is a ${OWNER_PROFILE.role}. I run hands-on interventions and fractional leadership to remove delivery bottlenecks, recurring incidents, and ownership gaps.`,
   primaryCta: {
     href: '#contact-form',
     label: 'Get a direct recommendation',

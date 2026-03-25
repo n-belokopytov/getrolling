@@ -179,7 +179,6 @@ export function useTopbarNavigation({ navLinks, headerRef, navRef, navToggleRef 
     isCompactViewport,
     isNavOpen,
     isTopbarSticky,
-    navSectionIds,
     setActiveSection,
     setIsNavOpen,
   };

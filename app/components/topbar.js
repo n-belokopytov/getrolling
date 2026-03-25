@@ -10,6 +10,7 @@ export function Topbar({
   navToggleRef,
   onNavLinkClick,
   onPrimaryAction,
+  ownerProfile,
   onToggleNav,
 }) {
   return (
@@ -24,6 +25,12 @@ export function Topbar({
             <span className="muted">{brand.domainSuffix}</span>
           </div>
           <div className="subbrand">{brand.tagline}</div>
+          <div className="owner-linkline">
+            By {ownerProfile.fullName}{' '}
+            <a href={ownerProfile.linkedinUrl} target="_blank" rel="noreferrer">
+              {ownerProfile.linkedinLabel}
+            </a>
+          </div>
         </div>
         <button
           ref={navToggleRef}

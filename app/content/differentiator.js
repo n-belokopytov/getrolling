@@ -1,17 +1,19 @@
+import { OWNER_PROFILE } from './owner';
+
 export const DIFFERENTIATOR_SECTION = {
   id: 'why-me',
   eyebrow: 'Why me',
   title: 'Strategy plus execution',
   aboutBody:
-    'I work directly with CTOs and product leaders to fix delivery bottlenecks. 16 years across gaming, fintech, and marketplaces.',
+    `${OWNER_PROFILE.fullName} works directly with CTOs and product leaders to fix delivery bottlenecks. 16 years across gaming, fintech, and marketplaces.`,
   points: [
     {
       title: 'Hands-on',
-      text: 'I work in your repos, pipelines, and incident workflows.',
+      text: `${OWNER_PROFILE.fullName} works in your repos, pipelines, and incident workflows.`,
     },
     {
       title: 'One owner',
-      text: 'You work with me directly, end to end.',
+      text: `You work with ${OWNER_PROFILE.fullName} directly, end to end.`,
     },
     {
       title: 'Outcome first',

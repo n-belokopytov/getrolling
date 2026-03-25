@@ -13,12 +13,10 @@ export function CaseStudiesSection({ caseStudies, caseStudiesSection }) {
               <span className="case-kicker">Problem: </span>
               {cs.problem}
             </p>
-            {cs.action ? (
-              <p>
-                <span className="case-kicker">Action: </span>
-                {cs.action}
-              </p>
-            ) : null}
+            <p>
+              <span className="case-kicker">Action: </span>
+              {cs.action}
+            </p>
             <div className="case-results">
               <div className="case-kicker">Result</div>
               <ul className="list metric-list">

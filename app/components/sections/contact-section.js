@@ -1,10 +1,13 @@
 export function ContactSection({
   contactErrors,
   contactForm,
+  contactHoneypot,
+  contactFormStartedAt,
   contactSection,
   contactStatus,
   hasBookingCalendar,
   onContactFieldChange,
+  onContactHoneypotChange,
   onContactSubmit,
   trackEvent,
 }) {
@@ -22,6 +25,18 @@ export function ContactSection({
       </div>
       <div className="cta-side">
         <form id="contact-form" className="contact-form" onSubmit={onContactSubmit} noValidate>
+          <input
+            type="text"
+            name="website"
+            value={contactHoneypot}
+            onChange={(event) => onContactHoneypotChange(event.target.value)}
+            className="sr-only"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+          />
+          <input type="hidden" name="formStartedAt" value={contactFormStartedAt} />
+
           <label className="contact-field">
             <span>Full name</span>
             <input
@@ -133,6 +148,15 @@ export function ContactSection({
           </a>
         </div>
         <div className="cta-note">{contactSection.note}</div>
+        <a
+          className="owner-profile-link"
+          href={contactSection.profileCta.href}
+          target="_blank"
+          rel="noreferrer"
+          onClick={() => trackEvent('owner_profile_click', { source: 'contact' })}
+        >
+          {contactSection.profileCta.label}
+        </a>
       </div>
     </section>
   );
