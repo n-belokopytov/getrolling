@@ -250,6 +250,11 @@ export default function HomePage() {
         onPrimaryClick={() => trackEvent('hero_primary_click')}
       />
 
+      <TestimonialsSection
+        testimonials={TESTIMONIALS}
+        testimonialsSection={TESTIMONIALS_SECTION}
+      />
+
       <DifferentiatorSection
         differentiatorSection={DIFFERENTIATOR_SECTION}
         trustedCompaniesSection={TRUSTED_COMPANIES_SECTION}
@@ -258,11 +263,6 @@ export default function HomePage() {
       <CaseStudiesSection
         caseStudies={CASE_STUDIES}
         caseStudiesSection={CASE_STUDIES_SECTION}
-      />
-
-      <TestimonialsSection
-        testimonials={TESTIMONIALS}
-        testimonialsSection={TESTIMONIALS_SECTION}
       />
 
       <WhoSection whoSection={WHO_SECTION} />
