@@ -1,8 +1,8 @@
 export const TESTIMONIALS_SECTION = {
   id: 'testimonials',
   eyebrow: 'LinkedIn testimonials',
-  title: 'What leaders say about working with me',
-  leadingCount: 3,
+  title: 'What people say about working with me',
+  slideshowDelayMs: 7000,
 };
 
 export const TESTIMONIALS = [
@@ -13,8 +13,8 @@ export const TESTIMONIALS = [
       "It's my pleasure to recommend Nikita as an Engineering Manager and Head of Mobile development. I had the opportunity to work with Nikita on the development of the AutoScout24 Android app. Nikita is an exceptional technical leader who strikes the perfect balance between guiding the overall mobile strategy and diving into the details when needed. He has a keen eye for identifying potential roadblocks early and course correcting quickly. Some of Nikita's key strengths include deep expertise in mobile architectures, best practices, and emerging technologies; strong mentorship skills through coaching, tech talks, and code reviews; and clear communication with active feedback loops. I enjoyed working with Nikita and recommend him without reservation for any mobile leadership role.",
     author: 'Pawel Krawczyk',
     role: 'Software Product and Platform Engineering Manager - Android at Accenture',
-    sourceLabel: 'View recommendation on LinkedIn',
-    sourceUrl: 'https://www.linkedin.com/in/pawe%C5%82-krawczyk-38124b50',
+    sourceLabel: 'See all on LinkedIn',
+    sourceUrl: 'https://www.linkedin.com/in/nbelokopytov/details/recommendations/',
   },
   {
     id: 'linkedin-2',
@@ -23,8 +23,8 @@ export const TESTIMONIALS = [
       "Niki is the best person I've ever worked with. His knowledge and perspective on problems is exceptional. When you feel stuck in a one-way street, Niki reframes the problem from technical and organizational angles and opens practical paths forward. He makes you work through solutions and helps you discover strengths you did not realize you had. As an iOS engineer under Niki's leadership, I always felt he was focused on personal growth, and his communication style removed barriers from day one.",
     author: 'Kaan Ozdemir',
     role: 'iOS Developer',
-    sourceLabel: 'View recommendation on LinkedIn',
-    sourceUrl: 'https://www.linkedin.com/in/kaan-ozdemir-49928510a',
+    sourceLabel: 'See all on LinkedIn',
+    sourceUrl: 'https://www.linkedin.com/in/nbelokopytov/details/recommendations/',
   },
   {
     id: 'linkedin-3',
@@ -33,8 +33,8 @@ export const TESTIMONIALS = [
       'Having collaborated with numerous engineering leaders, I can attest that the best ones blend leadership skills and true engineering management with genuine empathy for people and users. Nikita stands out as the epitome of these qualities. His profound theoretical knowledge translates into tangible product value, and his impact in creating high-performing teams at AutoScout24 has been remarkable.',
     author: 'Utpal Das',
     role: 'Product management leader and Board advisor',
-    sourceLabel: 'View recommendation on LinkedIn',
-    sourceUrl: 'https://www.linkedin.com/in/iamdasutpal/',
+    sourceLabel: 'See all on LinkedIn',
+    sourceUrl: 'https://www.linkedin.com/in/nbelokopytov/details/recommendations/',
   },
   {
     id: 'linkedin-4',
@@ -43,8 +43,8 @@ export const TESTIMONIALS = [
       'Nikita was an incredible mentor with extensive engineering knowledge who guided and shaped the team with strong leadership skills. I had the pleasure of working with Nikita at Nepos and highly recommend him.',
     author: 'Dilusha Gonagala',
     role: 'Principal Software Engineer | AWS Certified SAP-C02',
-    sourceLabel: 'View recommendation on LinkedIn',
-    sourceUrl: 'https://www.linkedin.com/in/andrewdex/',
+    sourceLabel: 'See all on LinkedIn',
+    sourceUrl: 'https://www.linkedin.com/in/nbelokopytov/details/recommendations/',
   },
   {
     id: 'linkedin-5',
@@ -53,8 +53,8 @@ export const TESTIMONIALS = [
       'I had the pleasure to work closely with Niki at Nepos for one year. He introduced me to the world of BI and data, shared his knowledge patiently, and combined deep technical expertise with strong business understanding. He is a great leader and mentor.',
     author: 'Maurice Vernier',
     role: 'Senior Business Analyst at Tesla',
-    sourceLabel: 'View recommendation on LinkedIn',
-    sourceUrl: 'https://www.linkedin.com/in/maurice-vernier/',
+    sourceLabel: 'See all on LinkedIn',
+    sourceUrl: 'https://www.linkedin.com/in/nbelokopytov/details/recommendations/',
   },
   {
     id: 'linkedin-6',
@@ -63,8 +63,8 @@ export const TESTIMONIALS = [
       "Nikita proved himself to be a skilled software engineer who combines excellent communication skills with a deep product-driven vision. I was always impressed by his ability to collaborate with multiple teams across the organization. Nikita would be an asset on any team.",
     author: 'Marcello Galhardo',
     role: 'Android Software Engineer @ Google',
-    sourceLabel: 'View recommendation on LinkedIn',
-    sourceUrl: 'https://www.linkedin.com/in/marcellogalhardo/',
+    sourceLabel: 'See all on LinkedIn',
+    sourceUrl: 'https://www.linkedin.com/in/nbelokopytov/details/recommendations/',
   },
   {
     id: 'linkedin-7',
@@ -73,8 +73,8 @@ export const TESTIMONIALS = [
       'I had the pleasure of working with Nikita on the Native Apps team at GetYourGuide. Nikita was one of the most dedicated professionals I have ever worked with. He consistently improved himself and everyone around him, contributed far beyond expected responsibilities, and brought strong Android, data, UX, and product thinking to the team.',
     author: 'Jacqueline Chen',
     role: 'Design Manager at Cleo',
-    sourceLabel: 'View recommendation on LinkedIn',
-    sourceUrl: 'https://www.linkedin.com/in/jacquelinexchen/',
+    sourceLabel: 'See all on LinkedIn',
+    sourceUrl: 'https://www.linkedin.com/in/nbelokopytov/details/recommendations/',
   },
   {
     id: 'linkedin-8',
@@ -83,7 +83,7 @@ export const TESTIMONIALS = [
       "Nikita is a great engineer: professional, easy to talk to, and excellent at communicating what's important while always keeping the big picture in mind. Technically strong and highly reliable, he is also a genuinely great person to work with.",
     author: 'Lucas Florio',
     role: 'Making things',
-    sourceLabel: 'View recommendation on LinkedIn',
-    sourceUrl: 'https://www.linkedin.com/in/lucasefe/',
+    sourceLabel: 'See all on LinkedIn',
+    sourceUrl: 'https://www.linkedin.com/in/nbelokopytov/details/recommendations/',
   },
 ];

@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export function TestimonialsSection({ testimonials, testimonialsSection }) {
   const orderedTestimonials = useMemo(() => {
@@ -9,9 +9,19 @@ export function TestimonialsSection({ testimonials, testimonialsSection }) {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const total = orderedTestimonials.length;
-  const leadingCount = Math.min(testimonialsSection.leadingCount, total);
+  const slideshowDelayMs = testimonialsSection.slideshowDelayMs ?? 7000;
 
   const current = orderedTestimonials[currentIndex];
+
+  useEffect(() => {
+    if (total <= 1) return undefined;
+
+    const timer = setTimeout(() => {
+      setCurrentIndex((prev) => (prev + 1) % total);
+    }, slideshowDelayMs);
+
+    return () => clearTimeout(timer);
+  }, [currentIndex, slideshowDelayMs, total]);
 
   function goTo(index) {
     setCurrentIndex(index);
@@ -33,24 +43,8 @@ export function TestimonialsSection({ testimonials, testimonialsSection }) {
         <div className="eyebrow">{testimonialsSection.eyebrow}</div>
         <h2>{testimonialsSection.title}</h2>
       </div>
-      <div className="testimonial-leading-list" aria-label="Leading recommendations">
-        {orderedTestimonials.slice(0, leadingCount).map((testimonial, index) => (
-          <button
-            key={testimonial.id}
-            type="button"
-            className={`testimonial-leading-pill ${index === currentIndex ? 'is-active' : ''}`}
-            onClick={() => goTo(index)}
-          >
-            {index + 1}. {testimonial.author}
-          </button>
-        ))}
-      </div>
-
       <div className="card testimonial-carousel">
-        <article className="testimonial-card">
-          {currentIndex < leadingCount ? (
-            <div className="testimonial-badge">Leading recommendation</div>
-          ) : null}
+        <article key={current.id} className="testimonial-card testimonial-card-fade">
           <p className="testimonial-quote">"{current.quote}"</p>
           <p className="testimonial-author">{current.author}</p>
           <p className="testimonial-role">{current.role}</p>
