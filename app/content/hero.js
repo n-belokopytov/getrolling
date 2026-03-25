@@ -1,17 +1,17 @@
 import { OWNER_PROFILE } from './owner';
 
 export const HERO = {
-  titleLine1: 'Ship faster with fewer outages,',
-  titleLine2: 'without burning team capacity.',
-  support: `${OWNER_PROFILE.fullName} is a ${OWNER_PROFILE.role}. I run hands-on interventions and fractional leadership to remove delivery bottlenecks, recurring incidents, and ownership gaps.`,
+  titleLine1: 'Ship faster with control,',
+  titleLine2: 'without exhausting your team.',
+  support: `I am ${OWNER_PROFILE.fullName}, ${OWNER_PROFILE.role} with executive capabilities. I lead hands-on interventions to resolve delivery bottlenecks, recurring incidents, and ownership gaps.`,
   primaryCta: {
     href: '#contact-form',
-    label: 'Get a direct recommendation',
+    label: 'Get your delivery recommendation',
   },
 };
 
 export const PROOF_NOTE =
-  'These are real project outcomes. They are examples, not guarantees.';
+  'These are outcomes from real projects. They are examples, not guarantees.';
 
 export const PROOF_METRICS = [
   {

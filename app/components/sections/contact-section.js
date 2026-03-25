@@ -112,7 +112,7 @@ export function ContactSection({
           >
             {contactStatus.type === 'submitting'
               ? 'Sending...'
-              : 'Get a direct recommendation'}
+              : 'Get your delivery recommendation'}
           </button>
 
           {contactStatus.type === 'error' ? (
