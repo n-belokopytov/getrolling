@@ -582,6 +582,14 @@ body a {
   margin-top: 0;
 }
 
+.startup-icp .eyebrow {
+  margin-bottom: 12px;
+}
+
+.startup-icp h3 {
+  margin-top: 0;
+}
+
 .case-studies {
   display: grid;
   gap: var(--space-3);
@@ -715,6 +723,10 @@ body a {
   font-size: 1.05rem;
   line-height: 1.75;
   color: #d4d4d8;
+}
+
+#why-me .cards.three {
+  margin-top: clamp(16px, 2.4vw, 24px);
 }
 
 .about-note {

@@ -3,6 +3,7 @@ import { OWNER_PROFILE } from './owner';
 export const BRAND = {
   name: 'GetRolling',
   domainSuffix: '.tech',
+  topbarHeadline: "Let's get your project rolling.",
   tagline: 'Hands-on help for faster, safer delivery',
 };
 

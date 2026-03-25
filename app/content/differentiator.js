@@ -5,11 +5,11 @@ export const DIFFERENTIATOR_SECTION = {
   eyebrow: 'Why me',
   title: 'Strategy plus execution',
   aboutBody:
-    `I work directly with CTOs and product leaders to fix delivery bottlenecks. 16 years across gaming, fintech, and marketplaces.`,
+    `I work directly with founders, technical and product leaders. Good with people, great with systems. 16 years across gaming, fintech, and marketplaces.`,
   points: [
     {
-      title: 'Hands-on',
-      text: 'I work in your repos, pipelines, and incident workflows.',
+      title: 'I get my hands dirty',
+      text: 'I work in your repos and pipelines, side by side with your team.',
     },
     {
       title: 'One owner',

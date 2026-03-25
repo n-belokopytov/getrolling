@@ -17,11 +17,6 @@ export function ContactSection({
         <div className="eyebrow dark">{contactSection.eyebrow}</div>
         <h2>{contactSection.title}</h2>
         <p>{contactSection.body}</p>
-        <p className="cta-gate-note">
-          Fit check is optional. If you complete it, it is included with your submission.
-        </p>
-        <p className="contact-next-step">{contactSection.responseWindow}</p>
-        <p className="contact-next-step">{contactSection.nextStep}</p>
       </div>
       <div className="cta-side">
         <form id="contact-form" className="contact-form" onSubmit={onContactSubmit} noValidate>

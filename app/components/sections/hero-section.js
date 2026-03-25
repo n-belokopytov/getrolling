@@ -13,7 +13,7 @@ export function HeroSection({ hero, proofMetrics, proofNote, onPrimaryClick }) {
       </div>
       <div className="proof-strip" aria-label="Selected results">
         {proofMetrics.map((item) => (
-          <div className="proof-item" key={item.stat}>
+          <div className="proof-item" key={`${item.stat}-${item.label}-${item.context}`}>
             <div className="proof-stat">{item.stat}</div>
             <div className="proof-label">{item.label}</div>
             <div className="proof-context">{item.context}</div>

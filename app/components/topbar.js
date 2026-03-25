@@ -21,12 +21,16 @@ export function Topbar({
       <div className="topbar-main">
         <div className="brand-wrap">
           <div className="brand">
-            {brand.name}
-            <span className="muted">{brand.domainSuffix}</span>
+            {brand.topbarHeadline || (
+              <>
+                {brand.name}
+                <span className="muted">{brand.domainSuffix}</span>
+              </>
+            )}
           </div>
-          <div className="subbrand">{brand.tagline}</div>
           <div className="owner-linkline">
-            By {ownerProfile.fullName}{' '}
+            {ownerProfile.fullName} - tech leadership and hands-on help for faster, safer
+            delivery.{' '}
             <a href={ownerProfile.linkedinUrl} target="_blank" rel="noreferrer">
               {ownerProfile.linkedinLabel}
             </a>

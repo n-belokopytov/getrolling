@@ -10,12 +10,9 @@ const bottleneckBody = encodeURIComponent(
 
 export const CONTACT_SECTION = {
   id: 'contact',
-  eyebrow: 'Primary action',
+  eyebrow: 'Next step',
   title: 'Share context. Get a clear next step.',
-  body: 'Share your bottleneck in a short form. I reply with a practical recommendation.',
-  responseWindow: 'You will get a direct response within one business day.',
-  nextStep:
-    'You get a delivery recommendation plus a concrete next-step plan.',
+  body: 'Share your bottleneck in a short form, and I will send you a free, practical recommendation within one business day. If you complete the Fit check, I include that signal in the same review.',
   primaryCta: {
     href: BOOKING_URL,
     label: 'Optional: book a 30-min call',
