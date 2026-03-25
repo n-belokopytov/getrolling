@@ -17,7 +17,7 @@ export const DIFFERENTIATOR_SECTION = {
     },
     {
       title: 'Outcome first',
-      text: 'Every change must improve cost, speed, or risk.',
+      text: 'Every change must improve cost, speed, or risk profile and come with a date.',
     },
   ],
 };
