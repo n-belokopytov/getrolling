@@ -37,12 +37,14 @@ import { trackEvent } from './lib/analytics';
 import { INITIAL_CONTACT_FORM, validateContactForm } from './lib/contact-form';
 import { getAnsweredCount, getRecommendedMode, getScore } from './lib/fit-check';
 
+const CONTACT_HONEYPOT_FIELD = 'company_referral_code_9f3k2m';
+
 export default function HomePage() {
   const [answers, setAnswers] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isFitCheckOpen, setIsFitCheckOpen] = useState(false);
   const [contactForm, setContactForm] = useState(INITIAL_CONTACT_FORM);
-  const [contactHoneypot, setContactHoneypot] = useState('');
+  const [contactHoneypotValue, setContactHoneypotValue] = useState('');
   const [contactFormStartedAt, setContactFormStartedAt] = useState(() => Date.now());
   const [contactErrors, setContactErrors] = useState({});
   const [contactStatus, setContactStatus] = useState({
@@ -178,7 +180,7 @@ export default function HomePage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...contactForm,
-          website: contactHoneypot,
+          [CONTACT_HONEYPOT_FIELD]: contactHoneypotValue,
           formStartedAt: contactFormStartedAt,
           fitCheck: {
             isSubmitted,
@@ -203,7 +205,7 @@ export default function HomePage() {
       });
       setContactErrors({});
       setContactForm(INITIAL_CONTACT_FORM);
-      setContactHoneypot('');
+      setContactHoneypotValue('');
       setContactFormStartedAt(Date.now());
       trackEvent('contact_submit_success');
     } catch (error) {
@@ -293,13 +295,14 @@ export default function HomePage() {
       <ContactSection
         contactErrors={contactErrors}
         contactForm={contactForm}
-        contactHoneypot={contactHoneypot}
+        contactHoneypotFieldName={CONTACT_HONEYPOT_FIELD}
+        contactHoneypotValue={contactHoneypotValue}
         contactFormStartedAt={contactFormStartedAt}
         contactSection={CONTACT_SECTION}
         contactStatus={contactStatus}
         hasBookingCalendar={hasBookingCalendar}
         onContactFieldChange={handleContactFieldChange}
-        onContactHoneypotChange={setContactHoneypot}
+        onContactHoneypotChange={setContactHoneypotValue}
         onContactSubmit={handleContactSubmit}
         trackEvent={trackEvent}
       />

@@ -1,7 +1,8 @@
 export function ContactSection({
   contactErrors,
   contactForm,
-  contactHoneypot,
+  contactHoneypotValue,
+  contactHoneypotFieldName,
   contactFormStartedAt,
   contactSection,
   contactStatus,
@@ -22,12 +23,12 @@ export function ContactSection({
         <form id="contact-form" className="contact-form" onSubmit={onContactSubmit} noValidate>
           <input
             type="text"
-            name="website"
-            value={contactHoneypot}
+            name={contactHoneypotFieldName}
+            value={contactHoneypotValue}
             onChange={(event) => onContactHoneypotChange(event.target.value)}
             className="sr-only"
             tabIndex={-1}
-            autoComplete="off"
+            autoComplete="new-password"
             aria-hidden="true"
           />
           <input type="hidden" name="formStartedAt" value={contactFormStartedAt} />

@@ -23,6 +23,7 @@ const MAX_SUBMISSIONS_PER_EMAIL_WINDOW = 3;
 const APPS_SCRIPT_TIMEOUT_MS = 8000;
 const DEFAULT_SUCCESS_MESSAGE =
   'Thanks. Request received. You should get a direct reply with next steps shortly.';
+const CONTACT_HONEYPOT_FIELD = 'company_referral_code_9f3k2m';
 
 const ipRateLimitStore = new Map();
 const emailRateLimitStore = new Map();
@@ -225,7 +226,7 @@ export async function POST(request) {
     const workEmail = sanitizeText(body?.workEmail).toLowerCase();
     const company = sanitizeText(body?.company);
     const challenge = sanitizeText(body?.challenge);
-    const website = sanitizeText(body?.website);
+    const honeypotValue = sanitizeText(body?.[CONTACT_HONEYPOT_FIELD]);
     const formStartedAt = Number(body?.formStartedAt || 0);
 
     if (!fullName) {
@@ -252,7 +253,7 @@ export async function POST(request) {
       return NextResponse.json({ error: lengthError }, { status: 400 });
     }
 
-    if (website) {
+    if (honeypotValue) {
       logAbuseEvent('blocked_honeypot');
       return NextResponse.json(
         { error: 'Unable to process request right now. Please try again.' },
