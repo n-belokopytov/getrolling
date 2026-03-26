@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { FloatingContactCta } from './components/floating-contact-cta';
 import { Topbar } from './components/topbar';
 import { CaseStudiesSection } from './components/sections/case-studies-section';
@@ -31,32 +31,16 @@ import {
   TRUSTED_COMPANIES_SECTION,
   WHO_SECTION,
 } from './constants';
+import { useContactForm } from './hooks/use-contact-form';
 import { useContactSectionVisibility } from './hooks/use-contact-section-visibility';
+import { useFitCheck } from './hooks/use-fit-check';
 import { useTopbarNavigation } from './hooks/use-topbar-navigation';
 import { trackEvent } from './lib/analytics';
-import { INITIAL_CONTACT_FORM, validateContactForm } from './lib/contact-form';
-import { getAnsweredCount, getRecommendedMode, getScore } from './lib/fit-check';
-
-const CONTACT_HONEYPOT_FIELD = 'company_referral_code_9f3k2m';
 
 export default function HomePage() {
-  const [answers, setAnswers] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isFitCheckOpen, setIsFitCheckOpen] = useState(false);
-  const [contactForm, setContactForm] = useState(INITIAL_CONTACT_FORM);
-  const [contactHoneypotValue, setContactHoneypotValue] = useState('');
-  const [contactFormStartedAt, setContactFormStartedAt] = useState(() => Date.now());
-  const [contactErrors, setContactErrors] = useState({});
-  const [contactStatus, setContactStatus] = useState({
-    type: 'idle',
-    message: '',
-  });
-
   const headerRef = useRef(null);
   const navRef = useRef(null);
   const navToggleRef = useRef(null);
-  const questionSelectRefs = useRef({});
-  const hasTrackedStep1StartRef = useRef(false);
 
   const {
     activeSection,
@@ -73,58 +57,42 @@ export default function HomePage() {
   });
 
   const isContactSectionVisible = useContactSectionVisibility(CONTACT_SECTION.id);
-
-  const answeredCount = useMemo(
-    () => getAnsweredCount(answers, QUALIFICATION_SECTION.questions),
-    [answers],
-  );
-  const score = useMemo(
-    () => getScore(answers, QUALIFICATION_SECTION.questions),
-    [answers],
-  );
-  const hasMinimumAnswers = answeredCount >= QUALIFICATION_SECTION.minAnswers;
-  const recommendedMode = useMemo(
-    () => getRecommendedMode({ answers, hasMinimumAnswers }),
-    [answers, hasMinimumAnswers],
-  );
-  const recommendation = recommendedMode
-    ? QUALIFICATION_SECTION.recommendations[recommendedMode]
-    : null;
-  const remainingAnswers = Math.max(
-    QUALIFICATION_SECTION.minAnswers - answeredCount,
-    0,
-  );
+  const {
+    answers,
+    answeredCount,
+    hasMinimumAnswers,
+    isFitCheckOpen,
+    isSubmitted,
+    onAnswerChange,
+    onFitCheckSubmit,
+    questionSelectRefs,
+    recommendation,
+    recommendedMode,
+    remainingAnswers,
+    score,
+    setIsFitCheckOpen,
+  } = useFitCheck(QUALIFICATION_SECTION);
+  const {
+    contactErrors,
+    contactForm,
+    contactFormStartedAt,
+    contactHoneypotFieldName,
+    contactHoneypotValue,
+    contactStatus,
+    onContactFieldChange,
+    onContactHoneypotChange,
+    onContactSubmit,
+  } = useContactForm({
+    answeredCount,
+    hasMinimumAnswers,
+    isSubmitted,
+    minAnswers: QUALIFICATION_SECTION.minAnswers,
+    recommendedMode,
+    score,
+  });
   const hasBookingCalendar = Boolean(BOOKING_URL);
   const shouldHideFloatingContact =
     !isCompactViewport || isContactSectionVisible || (isNavOpen && isCompactViewport);
-
-  function handleAnswerChange(questionId, value) {
-    if (!hasTrackedStep1StartRef.current) {
-      trackEvent('fitcheck_start');
-      hasTrackedStep1StartRef.current = true;
-    }
-
-    setAnswers((prev) => ({ ...prev, [questionId]: value }));
-  }
-
-  function handleFitCheckSubmit(event) {
-    event.preventDefault();
-    const unansweredQuestion = QUALIFICATION_SECTION.questions.find(
-      (question) => !answers[question.id],
-    );
-
-    trackEvent('fitcheck_submit', {
-      answeredCount,
-      minimumRequired: QUALIFICATION_SECTION.minAnswers,
-      score,
-      recommendedMode,
-    });
-    setIsSubmitted(true);
-
-    if (!hasMinimumAnswers && unansweredQuestion) {
-      questionSelectRefs.current[unansweredQuestion.id]?.focus();
-    }
-  }
 
   function handleNavLinkClick(targetHref) {
     trackEvent('nav_link_click', { target: targetHref });
@@ -136,86 +104,6 @@ export default function HomePage() {
     const contactSection = document.getElementById(CONTACT_SECTION.id);
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
-
-  function handleContactFieldChange(field, value) {
-    setContactForm((prev) => ({ ...prev, [field]: value }));
-    setContactErrors((prev) => {
-      if (!prev[field]) return prev;
-      const next = { ...prev };
-      delete next[field];
-      return next;
-    });
-  }
-
-  async function handleContactSubmit(event) {
-    event.preventDefault();
-
-    const nextErrors = validateContactForm(contactForm);
-    if (Object.keys(nextErrors).length > 0) {
-      const firstInvalidFieldName = Object.keys(nextErrors)[0];
-      const firstInvalidField = event.currentTarget.querySelector(
-        `[name="${firstInvalidFieldName}"]`,
-      );
-
-      setContactErrors(nextErrors);
-      setContactStatus({
-        type: 'error',
-        message: 'Please fix the highlighted fields and try again.',
-      });
-      trackEvent('contact_submit_validation_error', {
-        missingFields: Object.keys(nextErrors),
-      });
-      firstInvalidField?.focus();
-      return;
-    }
-
-    setContactStatus({ type: 'submitting', message: '' });
-    trackEvent('contact_submit_attempt');
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...contactForm,
-          [CONTACT_HONEYPOT_FIELD]: contactHoneypotValue,
-          formStartedAt: contactFormStartedAt,
-          fitCheck: {
-            isSubmitted,
-            answeredCount,
-            minAnswers: QUALIFICATION_SECTION.minAnswers,
-            score,
-            recommendedMode: isSubmitted && hasMinimumAnswers ? recommendedMode : null,
-          },
-        }),
-      });
-      const payload = await response.json();
-
-      if (!response.ok) {
-        throw new Error(payload?.error || 'Failed to submit contact request.');
-      }
-
-      setContactStatus({
-        type: 'success',
-        message:
-          payload?.message ||
-          'Thanks. Request received. You should get a direct reply with next steps shortly.',
-      });
-      setContactErrors({});
-      setContactForm(INITIAL_CONTACT_FORM);
-      setContactHoneypotValue('');
-      setContactFormStartedAt(Date.now());
-      trackEvent('contact_submit_success');
-    } catch (error) {
-      setContactStatus({
-        type: 'error',
-        message: error.message || 'Something went wrong. Please try again.',
-      });
-      trackEvent('contact_submit_failure', {
-        reason: error.message || 'unknown',
-      });
     }
   }
 
@@ -280,8 +168,8 @@ export default function HomePage() {
         hasMinimumAnswers={hasMinimumAnswers}
         isFitCheckOpen={isFitCheckOpen}
         isSubmitted={isSubmitted}
-        onAnswerChange={handleAnswerChange}
-        onFitCheckSubmit={handleFitCheckSubmit}
+        onAnswerChange={onAnswerChange}
+        onFitCheckSubmit={onFitCheckSubmit}
         onRecommendationClick={scrollToContact}
         onToggleOpen={() => setIsFitCheckOpen((prev) => !prev)}
         qualificationSection={QUALIFICATION_SECTION}
@@ -295,15 +183,15 @@ export default function HomePage() {
       <ContactSection
         contactErrors={contactErrors}
         contactForm={contactForm}
-        contactHoneypotFieldName={CONTACT_HONEYPOT_FIELD}
+        contactHoneypotFieldName={contactHoneypotFieldName}
         contactHoneypotValue={contactHoneypotValue}
         contactFormStartedAt={contactFormStartedAt}
         contactSection={CONTACT_SECTION}
         contactStatus={contactStatus}
         hasBookingCalendar={hasBookingCalendar}
-        onContactFieldChange={handleContactFieldChange}
-        onContactHoneypotChange={setContactHoneypotValue}
-        onContactSubmit={handleContactSubmit}
+        onContactFieldChange={onContactFieldChange}
+        onContactHoneypotChange={onContactHoneypotChange}
+        onContactSubmit={onContactSubmit}
         trackEvent={trackEvent}
       />
 

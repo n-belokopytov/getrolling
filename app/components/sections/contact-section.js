@@ -78,8 +78,15 @@ export function ContactSection({
               type="text"
               value={contactForm.company}
               onChange={(event) => onContactFieldChange('company', event.target.value)}
+              aria-invalid={Boolean(contactErrors.company)}
+              aria-describedby={contactErrors.company ? 'contact-company-error' : undefined}
               autoComplete="organization"
             />
+            {contactErrors.company ? (
+              <span id="contact-company-error" className="contact-error-text">
+                {contactErrors.company}
+              </span>
+            ) : null}
           </label>
 
           <label className="contact-field">

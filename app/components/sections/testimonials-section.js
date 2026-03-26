@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { SectionHeader } from '../section-header';
 
 export function TestimonialsSection({
   testimonials,
@@ -43,10 +44,7 @@ export function TestimonialsSection({
 
   return (
     <section id={testimonialsSection.id} className="section">
-      <div className="section-head">
-        <div className="eyebrow">{testimonialsSection.eyebrow}</div>
-        <h2>{testimonialsSection.title}</h2>
-      </div>
+      <SectionHeader eyebrow={testimonialsSection.eyebrow} title={testimonialsSection.title} />
       <div className="card testimonial-carousel">
         <article key={current.id} className="testimonial-card testimonial-card-fade">
           <p className="testimonial-quote">"{current.quote}"</p>

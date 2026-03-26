@@ -1,10 +1,9 @@
+import { SectionHeader } from '../section-header';
+
 export function EngagementsSection({ engagements, engagementsSection }) {
   return (
     <section id={engagementsSection.id} className="section">
-      <div className="section-head">
-        <div className="eyebrow">{engagementsSection.eyebrow}</div>
-        <h2>{engagementsSection.title}</h2>
-      </div>
+      <SectionHeader eyebrow={engagementsSection.eyebrow} title={engagementsSection.title} />
       <div className="cards three">
         {engagements.map((eng) => (
           <div className="card" key={eng.name}>

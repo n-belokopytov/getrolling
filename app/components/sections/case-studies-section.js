@@ -1,10 +1,9 @@
+import { SectionHeader } from '../section-header';
+
 export function CaseStudiesSection({ caseStudies, caseStudiesSection }) {
   return (
     <section id={caseStudiesSection.id} className="section">
-      <div className="section-head">
-        <div className="eyebrow">{caseStudiesSection.eyebrow}</div>
-        <h2>{caseStudiesSection.title}</h2>
-      </div>
+      <SectionHeader eyebrow={caseStudiesSection.eyebrow} title={caseStudiesSection.title} />
       <div className="case-studies">
         {caseStudies.map((cs) => (
           <article className="card large-card case-study" key={cs.company}>

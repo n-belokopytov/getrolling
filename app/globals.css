@@ -287,7 +287,6 @@ body a {
 
 .subbrand,
 .nav,
-.pill,
 .button,
 .card p,
 .large-card p,
@@ -897,15 +896,6 @@ body a {
   text-align: center;
 }
 
-.cta-secondary-link {
-  font-size: 0.92rem;
-  color: #18181b;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  text-align: center;
-  opacity: 0.84;
-}
-
 .owner-profile-link {
   font-size: 0.92rem;
   color: #18181b;
@@ -917,12 +907,6 @@ body a {
   background: transparent;
   color: var(--dark);
   border-color: rgba(9, 9, 11, 0.35);
-}
-
-.two-col {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: clamp(20px, 3.6vw, 34px);
 }
 
 h1 {
@@ -942,24 +926,6 @@ h2 {
 h3 {
   margin: 8px 0 0;
   font-size: 1.2rem;
-}
-
-.lead {
-  max-width: 760px;
-  margin-top: 18px;
-  color: #d4d4d8;
-  font-size: 1.12rem;
-  line-height: 1.74;
-}
-
-.pill,
-.mini-pill {
-  display: inline-block;
-  border: 1px solid var(--border);
-  background: rgba(17, 17, 17, 0.8);
-  border-radius: 999px;
-  padding: 8px 12px;
-  color: #d4d4d8;
 }
 
 .actions {
@@ -991,7 +957,6 @@ h3 {
 
 .button:focus-visible,
 .nav a:focus-visible,
-.cta-secondary-link:focus-visible,
 .fit-result-secondary a:focus-visible,
 .owner-profile-link:focus-visible,
 .owner-linkline a:focus-visible,
@@ -1014,38 +979,19 @@ h3 {
   color: var(--text);
 }
 
-.button.button-quiet {
-  background: transparent;
-  border-color: rgba(255, 255, 255, 0.24);
-  color: #d4d4d8;
-}
-
 .button.dark {
   background: var(--dark);
   color: var(--white);
 }
 
-.button.button-disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-.tag-grid,
 .cards.three,
 .cards.two {
   display: grid;
   gap: var(--space-3);
 }
 
-.tag-grid {
-  margin-top: var(--space-5);
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.tag-card,
 .card,
-.panel,
-.inner-card {
+.panel {
   border: 1px solid var(--soft-border);
   background: linear-gradient(160deg, rgba(24, 24, 27, 0.82), rgba(12, 12, 14, 0.85));
   border-radius: var(--radius-xl);
@@ -1060,28 +1006,14 @@ h3 {
   box-shadow: 0 18px 32px rgba(0, 0, 0, 0.24);
 }
 
-.tag-card,
 .card,
-.inner-card {
+.panel {
   padding: clamp(16px, 2.2vw, 22px);
 }
 
 .panel {
   padding: var(--space-4);
   align-self: end;
-}
-
-.panel-header {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--space-3);
-  align-items: flex-start;
-  margin-bottom: var(--space-3);
-}
-
-.stack {
-  display: grid;
-  gap: var(--space-3);
 }
 
 .section {
@@ -1146,27 +1078,9 @@ h3 {
   align-items: start;
 }
 
-.cta-soft {
-  border: 1px solid rgba(9, 9, 11, 0.18);
-}
-
 .cta-ready {
   border: 1px solid rgba(9, 9, 11, 0.25);
   box-shadow: 0 24px 48px rgba(9, 9, 11, 0.16);
-}
-
-.cta-gate-note {
-  margin-top: 10px;
-  max-width: 58ch;
-  font-size: 0.95rem;
-  color: #3f3f46;
-}
-
-.contact-next-step {
-  margin: 8px 0 0;
-  max-width: 58ch;
-  font-size: 0.92rem;
-  color: #3f3f46;
 }
 
 .cta-side {
@@ -1281,14 +1195,12 @@ h3 {
 
 .card h3,
 .large-card h3,
-.panel h3,
 .fit-result h3 {
   margin-top: 0;
 }
 
 .card > p:not([class]),
-.large-card > p:not([class]),
-.panel > p:not([class]) {
+.large-card > p:not([class]) {
   margin-top: 10px;
 }
 
@@ -1313,12 +1225,10 @@ h3 {
 
 /* Keep in sync with --topbar-compact-breakpoint for JS behavior parity. */
 @media (max-width: 1024px) {
-  .two-col,
   .feature-grid,
   .cta,
   .cards.three,
   .cards.two,
-  .tag-grid,
   .for-not-grid {
     grid-template-columns: 1fr;
   }

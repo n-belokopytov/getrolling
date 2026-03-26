@@ -1,10 +1,12 @@
+import { SectionHeader } from '../section-header';
+
 export function DifferentiatorSection({ differentiatorSection }) {
   return (
     <section id={differentiatorSection.id} className="section">
-      <div className="section-head">
-        <div className="eyebrow">{differentiatorSection.eyebrow}</div>
-        <h2>{differentiatorSection.title}</h2>
-      </div>
+      <SectionHeader
+        eyebrow={differentiatorSection.eyebrow}
+        title={differentiatorSection.title}
+      />
       <p className="about-body">{differentiatorSection.aboutBody}</p>
       <div className="cards three">
         {differentiatorSection.points.map((point) => (

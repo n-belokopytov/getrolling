@@ -1,10 +1,9 @@
+import { SectionHeader } from '../section-header';
+
 export function WhoSection({ whoSection }) {
   return (
     <section id={whoSection.id} className="section">
-      <div className="section-head">
-        <div className="eyebrow">{whoSection.eyebrow}</div>
-        <h2>{whoSection.title}</h2>
-      </div>
+      <SectionHeader eyebrow={whoSection.eyebrow} title={whoSection.title} />
       <div className="for-not-grid">
         <div className="card large-card for-card">
           <h3 className="for-not-heading">{whoSection.forTitle}</h3>

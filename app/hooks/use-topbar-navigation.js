@@ -1,9 +1,8 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useActiveSection } from './use-active-section';
+import { useTopbarMode } from './use-topbar-mode';
 
 const FALLBACK_COMPACT_BREAKPOINT = 1024;
-const TOPBAR_MINIMIZE_SCROLL_Y = 24;
-const TOPBAR_EXPAND_SCROLL_Y = 0;
-const FALLBACK_TOPBAR_TRANSITION_MS = 220;
 
 function getCompactBreakpoint() {
   const rootStyles = getComputedStyle(document.documentElement);
@@ -12,62 +11,15 @@ function getCompactBreakpoint() {
   return Number.isFinite(parsed) ? parsed : FALLBACK_COMPACT_BREAKPOINT;
 }
 
-function getTopbarTransitionMs() {
-  const rootStyles = getComputedStyle(document.documentElement);
-  const rawValue = rootStyles.getPropertyValue('--topbar-transition-ms').trim();
-  const parsed = Number.parseInt(rawValue, 10);
-  return Number.isFinite(parsed) ? parsed : FALLBACK_TOPBAR_TRANSITION_MS;
-}
-
-function getTopbarOffsetPx() {
-  const rootStyles = getComputedStyle(document.documentElement);
-  const rawValue = rootStyles.getPropertyValue('--topbar-offset').trim();
-  const parsed = Number.parseFloat(rawValue);
-  return Number.isFinite(parsed) ? parsed : 0;
-}
-
 export function useTopbarNavigation({ navLinks, headerRef, navRef, navToggleRef }) {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [isCompactViewport, setIsCompactViewport] = useState(false);
-  const [topbarMode, setTopbarMode] = useState('expanded');
-  const topbarModeRef = useRef('expanded');
-  const isTopbarAnimatingRef = useRef(false);
-  const animationUnlockTimeoutRef = useRef(null);
   const navSectionIds = useMemo(
     () => navLinks.map((link) => link.href.replace('#', '')).filter(Boolean),
     [navLinks],
   );
-  const [activeSection, setActiveSection] = useState(navSectionIds[0] || '');
-
-  useEffect(() => {
-    if (!navSectionIds.length) return undefined;
-
-    function syncActiveSectionFromScroll() {
-      const activationOffset = (headerRef.current?.offsetHeight || 0) + 24;
-      const activationY = window.scrollY + activationOffset;
-      let nextActiveSection = navSectionIds[0];
-
-      navSectionIds.forEach((id) => {
-        const section = document.getElementById(id);
-        if (!section) return;
-        if (section.offsetTop <= activationY) {
-          nextActiveSection = id;
-        }
-      });
-
-      setActiveSection((previousSection) =>
-        previousSection === nextActiveSection ? previousSection : nextActiveSection,
-      );
-    }
-
-    syncActiveSectionFromScroll();
-    window.addEventListener('scroll', syncActiveSectionFromScroll, { passive: true });
-    window.addEventListener('resize', syncActiveSectionFromScroll);
-    return () => {
-      window.removeEventListener('scroll', syncActiveSectionFromScroll);
-      window.removeEventListener('resize', syncActiveSectionFromScroll);
-    };
-  }, [navSectionIds, headerRef]);
+  const { activeSection, setActiveSection } = useActiveSection({ headerRef, navSectionIds });
+  const topbarMode = useTopbarMode();
 
   useEffect(() => {
     if (!isNavOpen) return undefined;
@@ -149,83 +101,6 @@ export function useTopbarNavigation({ navLinks, headerRef, navRef, navToggleRef 
     window.addEventListener('keydown', handleTabTrap);
     return () => window.removeEventListener('keydown', handleTabTrap);
   }, [isNavOpen, isCompactViewport, navRef, navToggleRef]);
-
-  useEffect(() => {
-    let frameId = null;
-    let latestScrollY = 0;
-    const transitionMs = getTopbarTransitionMs();
-
-    function scheduleUnlock() {
-      if (animationUnlockTimeoutRef.current) {
-        window.clearTimeout(animationUnlockTimeoutRef.current);
-      }
-      animationUnlockTimeoutRef.current = window.setTimeout(() => {
-        isTopbarAnimatingRef.current = false;
-        latestScrollY = window.scrollY;
-        if (frameId === null) {
-          frameId = window.requestAnimationFrame(syncTopbarMode);
-        }
-      }, transitionMs);
-    }
-
-    function switchTopbarMode(nextMode) {
-      if (nextMode === 'minimized') {
-        const offset = getTopbarOffsetPx();
-        if (offset > 0) {
-          window.scrollTo({
-            top: window.scrollY + offset,
-            behavior: 'auto',
-          });
-          latestScrollY = window.scrollY;
-        }
-      }
-      topbarModeRef.current = nextMode;
-      setTopbarMode(nextMode);
-      isTopbarAnimatingRef.current = true;
-      scheduleUnlock();
-    }
-
-    function syncTopbarMode() {
-      frameId = null;
-      if (isTopbarAnimatingRef.current) return;
-      if (
-        topbarModeRef.current === 'expanded' &&
-        latestScrollY >= TOPBAR_MINIMIZE_SCROLL_Y
-      ) {
-        switchTopbarMode('minimized');
-        return;
-      }
-      if (
-        topbarModeRef.current === 'minimized' &&
-        latestScrollY <= TOPBAR_EXPAND_SCROLL_Y
-      ) {
-        switchTopbarMode('expanded');
-      }
-    }
-
-    function handleScroll() {
-      latestScrollY = window.scrollY;
-      if (frameId !== null) return;
-      frameId = window.requestAnimationFrame(syncTopbarMode);
-    }
-
-    latestScrollY = window.scrollY;
-    const initialMode =
-      latestScrollY >= TOPBAR_MINIMIZE_SCROLL_Y ? 'minimized' : 'expanded';
-    topbarModeRef.current = initialMode;
-    setTopbarMode(initialMode);
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (frameId !== null) {
-        window.cancelAnimationFrame(frameId);
-      }
-      if (animationUnlockTimeoutRef.current) {
-        window.clearTimeout(animationUnlockTimeoutRef.current);
-      }
-    };
-  }, []);
 
   useEffect(() => {
     function syncTopbarHeight() {
