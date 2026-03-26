@@ -62,7 +62,7 @@ export default function HomePage() {
     activeSection,
     isCompactViewport,
     isNavOpen,
-    isTopbarSticky,
+    topbarMode,
     setActiveSection,
     setIsNavOpen,
   } = useTopbarNavigation({
@@ -231,7 +231,7 @@ export default function HomePage() {
         headerRef={headerRef}
         isCompactViewport={isCompactViewport}
         isNavOpen={isNavOpen}
-        isTopbarSticky={isTopbarSticky}
+        topbarMode={topbarMode}
         navLinks={NAV_LINKS}
         navRef={navRef}
         navToggleRef={navToggleRef}

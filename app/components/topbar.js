@@ -6,7 +6,7 @@ export function Topbar({
   headerRef,
   isCompactViewport,
   isNavOpen,
-  isTopbarSticky,
+  topbarMode,
   navLinks,
   navRef,
   navToggleRef,
@@ -18,7 +18,7 @@ export function Topbar({
   return (
     <header
       ref={headerRef}
-      className={`topbar ${isTopbarSticky ? 'topbar-sticky topbar-compact' : ''}`}
+      className={`topbar ${topbarMode === 'minimized' ? 'topbar-minimized' : 'topbar-expanded'}`}
     >
       <div className="topbar-identity-row">
         <div className="brand-wrap">

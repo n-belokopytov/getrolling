@@ -30,6 +30,7 @@
   --topbar-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
   --topbar-shadow-sticky: 0 18px 36px rgba(0, 0, 0, 0.26);
   --topbar-radius: 14px;
+  --topbar-transition-ms: 220;
 }
 
 * {
@@ -111,22 +112,25 @@ body a {
   border-radius: var(--topbar-radius);
   box-shadow: var(--topbar-shadow);
   transition:
-    background-color 0.22s ease,
-    border-color 0.22s ease,
-    box-shadow 0.22s ease,
-    padding 0.22s ease;
+    top calc(var(--topbar-transition-ms) * 1ms) ease,
+    background-color calc(var(--topbar-transition-ms) * 1ms) ease,
+    border-color calc(var(--topbar-transition-ms) * 1ms) ease,
+    box-shadow calc(var(--topbar-transition-ms) * 1ms) ease,
+    border-radius calc(var(--topbar-transition-ms) * 1ms) ease,
+    padding calc(var(--topbar-transition-ms) * 1ms) ease;
 }
 
-.topbar-sticky {
+.topbar-expanded {
+  top: var(--topbar-offset);
+}
+
+.topbar-minimized {
   top: 0;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   background: var(--topbar-surface-sticky);
   border-color: var(--topbar-border-sticky);
   box-shadow: var(--topbar-shadow-sticky);
-}
-
-.topbar-compact {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
@@ -238,46 +242,46 @@ body a {
   display: none;
 }
 
-.topbar-compact .subbrand {
+.topbar-minimized .subbrand {
   opacity: 0;
   max-height: 0;
   margin: 0;
 }
 
-.topbar-compact .topbar-identity-row {
+.topbar-minimized .topbar-identity-row {
   justify-content: flex-start;
   min-width: 0;
 }
 
-.topbar-compact .topbar-action-row {
+.topbar-minimized .topbar-action-row {
   border-top: none;
   padding-top: 0;
   min-width: 0;
 }
 
-.topbar-compact .nav {
+.topbar-minimized .nav {
   width: auto;
 }
 
-.topbar-compact .owner-linkline-desktop {
+.topbar-minimized .owner-linkline-desktop {
   display: none;
 }
 
-.topbar-compact .brand-icon {
+.topbar-minimized .brand-icon {
   width: clamp(34px, 2.6vw, 42px);
 }
 
-.topbar-compact .brand {
+.topbar-minimized .brand {
   align-items: center;
 }
 
-.topbar-compact .brand-subline {
+.topbar-minimized .brand-subline {
   opacity: 0;
   max-height: 0;
   overflow: hidden;
 }
 
-.topbar-compact .topbar-author-row {
+.topbar-minimized .topbar-author-row {
   display: none;
 }
 
@@ -1323,11 +1327,31 @@ h3 {
     gap: 8px;
   }
 
-  .topbar-compact {
+  .topbar-minimized {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    row-gap: 8px;
+    row-gap: 0;
+  }
+
+  .topbar-minimized .topbar-identity-row {
+    min-height: 44px;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .topbar-minimized .brand-wrap {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .topbar-minimized .nav-toggle {
+    flex-shrink: 0;
+  }
+
+  .topbar-minimized .nav.nav-open {
+    margin-top: 8px;
   }
 
   .topbar-identity-row {
@@ -1350,7 +1374,7 @@ h3 {
     padding-top: 2px;
   }
 
-  .topbar-compact .topbar-author-row {
+  .topbar-minimized .topbar-author-row {
     display: none;
   }
 
