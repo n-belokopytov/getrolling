@@ -1,0 +1,267 @@
+/* Post-section shared utilities and responsive overrides. */
+.card h3,
+.large-card h3,
+.fit-result h3 {
+  margin-top: 0;
+}
+
+.card > p:not([class]),
+.large-card > p:not([class]) {
+  margin-top: 10px;
+}
+
+.card,
+.large-card,
+.panel,
+.fit-check-card,
+.cta,
+.section {
+  min-width: 0;
+}
+
+.eyebrow {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.eyebrow.dark {
+  color: #71717a;
+}
+
+/* Keep in sync with --topbar-compact-breakpoint for JS behavior parity. */
+@media (max-width: 1024px) {
+  .feature-grid,
+  .cta,
+  .cards.three,
+  .cards.two,
+  .for-not-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    gap: 8px;
+  }
+
+  .topbar-minimized {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    row-gap: 0;
+  }
+
+  .topbar-minimized .topbar-identity-row {
+    min-height: 44px;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .topbar-minimized .brand-wrap {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .topbar-minimized .nav-toggle {
+    flex-shrink: 0;
+  }
+
+  .topbar-minimized .nav.nav-open {
+    margin-top: 8px;
+  }
+
+  .topbar-identity-row {
+    align-items: center;
+  }
+
+  .topbar-action-row {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  .owner-linkline-desktop,
+  .brand-subline {
+    display: none;
+  }
+
+  .topbar-author-row {
+    display: block;
+    margin-top: -2px;
+    padding-top: 2px;
+  }
+
+  .topbar-minimized .topbar-author-row {
+    display: none;
+  }
+
+  .brand {
+    align-items: center;
+  }
+
+  .nav {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 0;
+    border: 0 solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    background: rgba(17, 17, 17, 0.96);
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    overflow: hidden;
+    transform: translateY(-6px);
+    transition:
+      max-height 0.22s ease,
+      opacity 0.2s ease,
+      transform 0.2s ease,
+      visibility 0s linear 0.2s;
+  }
+
+  .nav.nav-open {
+    padding: 12px;
+    border-width: 1px;
+    max-height: 460px;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+    transition:
+      max-height 0.26s ease,
+      opacity 0.2s ease,
+      transform 0.2s ease,
+      visibility 0s;
+  }
+
+  .nav a {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 10px;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    min-height: 44px;
+  }
+
+  .nav-cta {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 4px;
+    min-height: 40px;
+  }
+
+  .cta-side {
+    align-items: flex-start;
+  }
+
+  .fit-check-progress {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-title {
+    line-height: 1.1;
+  }
+
+  .section + .section {
+    border-top: none;
+  }
+
+  .fit-check-prompt {
+    width: 100%;
+  }
+
+  .button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .cta-buttons .button {
+    width: 100%;
+  }
+
+  .actions {
+    width: 100%;
+  }
+
+  .proof-strip {
+    margin-top: clamp(30px, 8vw, 42px);
+  }
+
+  .trusted-companies-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --topbar-offset: 8px;
+    --anchor-gap: 10px;
+  }
+
+  .page-shell {
+    padding: 14px;
+  }
+
+  .topbar {
+    padding: 8px 12px;
+  }
+
+  .hero {
+    padding-top: 20px;
+  }
+
+  .hero-full {
+    border-radius: 20px;
+    padding: 20px;
+  }
+
+  .section-head {
+    margin-bottom: 18px;
+  }
+
+  .list {
+    padding-left: 20px;
+  }
+
+  .cta-buttons {
+    max-width: 100%;
+  }
+
+  .proof-item {
+    flex-basis: 100%;
+  }
+
+  .trusted-companies-list {
+    grid-template-columns: 1fr;
+  }
+
+  .floating-contact-cta {
+    right: 14px;
+    bottom: 14px;
+    padding: 10px 14px;
+  }
+
+  .brand-icon {
+    width: 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

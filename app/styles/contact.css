@@ -1,0 +1,100 @@
+/* Contact form and floating contact CTA styles. */
+.contact-form {
+  width: 100%;
+  border: 1px solid rgba(9, 9, 11, 0.24);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 14px;
+  display: grid;
+  gap: 10px;
+  box-shadow: 0 10px 22px rgba(9, 9, 11, 0.1);
+}
+
+.contact-field {
+  display: grid;
+  gap: 6px;
+  font-size: 0.92rem;
+  color: #3f3f46;
+}
+
+.contact-field input,
+.contact-field textarea {
+  width: 100%;
+  border: 1px solid rgba(9, 9, 11, 0.2);
+  border-radius: 10px;
+  background: #ffffff;
+  color: #111827;
+  padding: 10px 12px;
+  font: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.contact-field input:focus-visible,
+.contact-field textarea:focus-visible,
+.fit-question select:focus-visible {
+  outline: none;
+  border-color: rgba(59, 130, 246, 0.55);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.contact-field input[aria-invalid='true'],
+.contact-field textarea[aria-invalid='true'] {
+  border-color: #ef4444;
+}
+
+.contact-error-text {
+  font-size: 0.82rem;
+  color: #b91c1c;
+}
+
+.contact-status {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.contact-status-error {
+  color: #b91c1c;
+}
+
+.contact-status-success {
+  color: #166534;
+}
+
+.floating-contact-cta {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 42;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(17, 17, 17, 0.94);
+  color: var(--white);
+  border-radius: 999px;
+  padding: 11px 16px;
+  font: inherit;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    visibility 0.2s ease;
+}
+
+.floating-contact-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.34);
+}
+
+.floating-contact-cta:focus-visible {
+  outline: 2px solid rgba(244, 244, 245, 0.9);
+  outline-offset: 2px;
+}
+
+.floating-contact-cta.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(6px);
+}

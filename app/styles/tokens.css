@@ -1,0 +1,35 @@
+/* Design tokens and global CSS variables. */
+:root {
+  --bg: #0a0a0a;
+  --panel: #111111;
+  --panel-2: #171717;
+  --border: #27272a;
+  --text: #f4f4f5;
+  --muted: #a1a1aa;
+  --white: #ffffff;
+  --dark: #09090b;
+  --content-max: 1160px;
+  --space-1: 10px;
+  --space-2: 14px;
+  --space-3: 18px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 44px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --soft-border: rgba(255, 255, 255, 0.1);
+  --elev-1: 0 10px 22px rgba(0, 0, 0, 0.2);
+  --elev-2: 0 24px 50px rgba(0, 0, 0, 0.28);
+  --topbar-height: 82px;
+  --topbar-offset: clamp(8px, 1.4vw, 16px);
+  --anchor-gap: clamp(12px, 1.5vw, 18px);
+  --topbar-compact-breakpoint: 1024;
+  --topbar-surface: rgba(11, 11, 13, 0.72);
+  --topbar-surface-sticky: rgba(11, 11, 13, 0.9);
+  --topbar-border: rgba(255, 255, 255, 0.08);
+  --topbar-border-sticky: rgba(255, 255, 255, 0.14);
+  --topbar-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+  --topbar-shadow-sticky: 0 18px 36px rgba(0, 0, 0, 0.26);
+  --topbar-radius: 14px;
+  --topbar-transition-ms: 220;
+}
