@@ -13,7 +13,7 @@
 - Confirm `fitcheck_start` and `fitcheck_submit` fire with expected payload fields.
 - Confirm `fitcheck_recommendation_click` and `fitcheck_skip_to_contact_click` fire.
 - Confirm `contact_submit_attempt`, `contact_submit_success`, and `contact_submit_failure` paths.
-- Confirm `booking_calendar_click` and `email_fallback_click` where applicable.
+- Confirm `booking_calendar_click` where applicable.
 
 ## Viewport Smoke Tests
 

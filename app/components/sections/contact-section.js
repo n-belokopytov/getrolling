@@ -135,13 +135,6 @@ export function ContactSection({
               {contactSection.primaryCta.label}
             </a>
           ) : null}
-          <a
-            className="cta-secondary-link"
-            href={contactSection.secondaryCta.href}
-            onClick={() => trackEvent('email_fallback_click')}
-          >
-            {contactSection.secondaryCta.label}
-          </a>
         </div>
         <div className="cta-note">{contactSection.note}</div>
         <a

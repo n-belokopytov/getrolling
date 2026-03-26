@@ -1,7 +1,7 @@
 export const TESTIMONIALS_SECTION = {
-  id: 'testimonials',
-  eyebrow: 'LinkedIn testimonials',
-  title: 'What people say about working with me',
+  id: 'proof',
+  eyebrow: 'Proof',
+  title: 'What people say and where I have delivered',
   slideshowDelayMs: 7000,
 };
 

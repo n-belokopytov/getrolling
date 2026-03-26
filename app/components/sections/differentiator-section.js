@@ -1,7 +1,4 @@
-export function DifferentiatorSection({
-  differentiatorSection,
-  trustedCompaniesSection,
-}) {
+export function DifferentiatorSection({ differentiatorSection }) {
   return (
     <section id={differentiatorSection.id} className="section">
       <div className="section-head">
@@ -16,27 +13,6 @@ export function DifferentiatorSection({
             <p>{point.text}</p>
           </div>
         ))}
-      </div>
-      <div className="trusted-proof" aria-label="Trusted companies">
-        <div className="eyebrow">{trustedCompaniesSection.eyebrow}</div>
-        <ul className="trusted-companies-list">
-          {trustedCompaniesSection.companies.map((company) => (
-            <li className="trusted-company-item" key={company.name}>
-              <div className="trusted-company-head">
-                <h4>{company.name}</h4>
-                <a
-                  className="trusted-company-link"
-                  href={company.url}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Visit
-                </a>
-              </div>
-              <p className="trusted-company-description">{company.description}</p>
-            </li>
-          ))}
-        </ul>
       </div>
     </section>
   );

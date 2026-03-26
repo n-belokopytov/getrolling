@@ -22,40 +22,32 @@ export function useTopbarNavigation({ navLinks, headerRef, navRef, navToggleRef 
   useEffect(() => {
     if (!navSectionIds.length) return undefined;
 
-    const visibleSections = new Map();
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            visibleSections.set(entry.target.id, entry.intersectionRatio);
-          } else {
-            visibleSections.delete(entry.target.id);
-          }
-        });
+    function syncActiveSectionFromScroll() {
+      const activationOffset = (headerRef.current?.offsetHeight || 0) + 24;
+      const activationY = window.scrollY + activationOffset;
+      let nextActiveSection = navSectionIds[0];
 
-        if (visibleSections.size === 0) return;
-
-        const [mostVisible] = [...visibleSections.entries()].sort(
-          (a, b) => b[1] - a[1],
-        );
-
-        if (mostVisible?.[0]) {
-          setActiveSection(mostVisible[0]);
+      navSectionIds.forEach((id) => {
+        const section = document.getElementById(id);
+        if (!section) return;
+        if (section.offsetTop <= activationY) {
+          nextActiveSection = id;
         }
-      },
-      {
-        threshold: [0.2, 0.4, 0.65],
-        rootMargin: '-30% 0px -50% 0px',
-      },
-    );
+      });
 
-    navSectionIds.forEach((id) => {
-      const section = document.getElementById(id);
-      if (section) observer.observe(section);
-    });
+      setActiveSection((previousSection) =>
+        previousSection === nextActiveSection ? previousSection : nextActiveSection,
+      );
+    }
 
-    return () => observer.disconnect();
-  }, [navSectionIds]);
+    syncActiveSectionFromScroll();
+    window.addEventListener('scroll', syncActiveSectionFromScroll, { passive: true });
+    window.addEventListener('resize', syncActiveSectionFromScroll);
+    return () => {
+      window.removeEventListener('scroll', syncActiveSectionFromScroll);
+      window.removeEventListener('resize', syncActiveSectionFromScroll);
+    };
+  }, [navSectionIds, headerRef]);
 
   useEffect(() => {
     if (!isNavOpen) return undefined;

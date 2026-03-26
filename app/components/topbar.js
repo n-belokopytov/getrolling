@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export function Topbar({
   activeSection,
   brand,
@@ -18,23 +20,39 @@ export function Topbar({
       ref={headerRef}
       className={`topbar ${isTopbarSticky ? 'topbar-sticky topbar-compact' : ''}`}
     >
-      <div className="topbar-main">
+      <div className="topbar-identity-row">
         <div className="brand-wrap">
           <div className="brand">
-            {brand.topbarHeadline || (
-              <>
+            <Image
+              src="/site-mark-inverted-tight.png"
+              alt=""
+              aria-hidden="true"
+              width={247}
+              height={161}
+              className="brand-icon"
+              priority
+            />
+            <span className="brand-text">
+              <span className="brand-headline">
+                {brand.topbarHeadline || (
+                  <>
+                    {brand.name}
+                    <span className="muted">{brand.domainSuffix}</span>
+                  </>
+                )}
+              </span>
+              <span className="brand-subline">
                 {brand.name}
-                <span className="muted">{brand.domainSuffix}</span>
-              </>
-            )}
+                <span className="muted">{brand.domainSuffix}</span> - {brand.tagline}
+              </span>
+            </span>
           </div>
-          <div className="owner-linkline">
-            {ownerProfile.fullName} - tech leadership and hands-on help for faster, safer
-            delivery.{' '}
-            <a href={ownerProfile.linkedinUrl} target="_blank" rel="noreferrer">
-              {ownerProfile.linkedinLabel}
-            </a>
-          </div>
+        </div>
+        <div className="owner-linkline owner-linkline-desktop">
+          <span>{ownerProfile.fullName} - delivery leadership, hands-on execution.</span>{' '}
+          <a href={ownerProfile.linkedinUrl} target="_blank" rel="noreferrer">
+            {ownerProfile.linkedinLabel}
+          </a>
         </div>
         <button
           ref={navToggleRef}
@@ -50,31 +68,39 @@ export function Topbar({
           <span className={`nav-toggle-icon ${isNavOpen ? 'is-open' : ''}`} aria-hidden="true" />
         </button>
       </div>
-      <nav
-        ref={navRef}
-        id="primary-nav"
-        className={`nav ${isNavOpen ? 'nav-open' : ''}`}
-        aria-label="Primary"
-        role={isCompactViewport ? 'dialog' : undefined}
-        aria-modal={isCompactViewport && isNavOpen ? true : undefined}
-      >
-        {navLinks.map((link) => (
-          <a
-            href={link.href}
-            key={link.href}
-            onClick={() => onNavLinkClick(link.href)}
-            className={activeSection === link.href.replace('#', '') ? 'is-active' : ''}
-            aria-current={
-              activeSection === link.href.replace('#', '') ? 'location' : undefined
-            }
-          >
-            {link.label}
-          </a>
-        ))}
-        <button type="button" className="nav-cta" onClick={onPrimaryAction}>
-          Contact
-        </button>
-      </nav>
+      <div className="topbar-author-row owner-linkline">
+        <span>{ownerProfile.fullName} - delivery leadership, hands-on execution.</span>{' '}
+        <a href={ownerProfile.linkedinUrl} target="_blank" rel="noreferrer">
+          {ownerProfile.linkedinLabel}
+        </a>
+      </div>
+      <div className="topbar-action-row">
+        <nav
+          ref={navRef}
+          id="primary-nav"
+          className={`nav ${isNavOpen ? 'nav-open' : ''}`}
+          aria-label="Primary"
+          role={isCompactViewport ? 'dialog' : undefined}
+          aria-modal={isCompactViewport && isNavOpen ? true : undefined}
+        >
+          {navLinks.map((link) => (
+            <a
+              href={link.href}
+              key={link.href}
+              onClick={() => onNavLinkClick(link.href)}
+              className={activeSection === link.href.replace('#', '') ? 'is-active' : ''}
+              aria-current={
+                activeSection === link.href.replace('#', '') ? 'location' : undefined
+              }
+            >
+              {link.label}
+            </a>
+          ))}
+          <button type="button" className="nav-cta" onClick={onPrimaryAction}>
+            Contact
+          </button>
+        </nav>
+      </div>
     </header>
   );
 }

@@ -2,7 +2,11 @@
 
 import { useEffect, useMemo, useState } from 'react';
 
-export function TestimonialsSection({ testimonials, testimonialsSection }) {
+export function TestimonialsSection({
+  testimonials,
+  testimonialsSection,
+  trustedCompaniesSection,
+}) {
   const orderedTestimonials = useMemo(() => {
     return [...testimonials].sort((a, b) => a.importance - b.importance);
   }, [testimonials]);
@@ -77,6 +81,27 @@ export function TestimonialsSection({ testimonials, testimonialsSection }) {
             Next
           </button>
         </div>
+      </div>
+      <div className="trusted-proof" aria-label="Trusted companies">
+        <div className="eyebrow">{trustedCompaniesSection.eyebrow}</div>
+        <ul className="trusted-companies-list">
+          {trustedCompaniesSection.companies.map((company) => (
+            <li className="trusted-company-item" key={company.name}>
+              <div className="trusted-company-head">
+                <h4>{company.name}</h4>
+                <a
+                  className="trusted-company-link"
+                  href={company.url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Visit
+                </a>
+              </div>
+              <p className="trusted-company-description">{company.description}</p>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
