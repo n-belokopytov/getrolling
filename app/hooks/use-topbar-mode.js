@@ -14,8 +14,24 @@ function getTopbarTransitionMs() {
 function getTopbarOffsetPx() {
   const rootStyles = getComputedStyle(document.documentElement);
   const rawValue = rootStyles.getPropertyValue('--topbar-offset').trim();
-  const parsed = Number.parseFloat(rawValue);
-  return Number.isFinite(parsed) ? parsed : 0;
+  if (!rawValue) return 0;
+
+  // Resolve CSS length functions (for example clamp()) into a px value.
+  const probe = document.createElement('div');
+  probe.style.position = 'absolute';
+  probe.style.visibility = 'hidden';
+  probe.style.pointerEvents = 'none';
+  probe.style.height = '0';
+  probe.style.top = rawValue;
+  document.body.appendChild(probe);
+
+  try {
+    const resolvedTop = getComputedStyle(probe).top;
+    const parsed = Number.parseFloat(resolvedTop);
+    return Number.isFinite(parsed) ? parsed : 0;
+  } finally {
+    document.body.removeChild(probe);
+  }
 }
 
 export function useTopbarMode() {

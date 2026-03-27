@@ -86,12 +86,20 @@
 
   .topbar-author-row {
     display: block;
+    max-height: 32px;
+    opacity: 1;
     margin-top: -2px;
     padding-top: 2px;
+    transform: translateY(0);
   }
 
   .topbar-minimized .topbar-author-row {
-    display: none;
+    max-height: 0;
+    opacity: 0;
+    margin-top: 0;
+    padding-top: 0;
+    transform: translateY(-2px);
+    pointer-events: none;
   }
 
   .brand {
@@ -115,10 +123,10 @@
     overflow: hidden;
     transform: translateY(-6px);
     transition:
-      max-height 0.22s ease,
-      opacity 0.2s ease,
-      transform 0.2s ease,
-      visibility 0s linear 0.2s;
+      max-height calc(var(--topbar-transition-ms) * 1ms) ease,
+      opacity calc(var(--topbar-transition-ms) * 1ms) ease,
+      transform calc(var(--topbar-transition-ms) * 1ms) ease,
+      visibility 0s linear calc(var(--topbar-transition-ms) * 1ms);
   }
 
   .nav.nav-open {
@@ -130,9 +138,9 @@
     pointer-events: auto;
     transform: translateY(0);
     transition:
-      max-height 0.26s ease,
-      opacity 0.2s ease,
-      transform 0.2s ease,
+      max-height calc(var(--topbar-transition-ms) * 1ms) ease,
+      opacity calc(var(--topbar-transition-ms) * 1ms) ease,
+      transform calc(var(--topbar-transition-ms) * 1ms) ease,
       visibility 0s;
   }
 
