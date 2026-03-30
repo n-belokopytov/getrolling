@@ -46,6 +46,7 @@ export default function HomePage() {
     activeSection,
     isCompactViewport,
     isNavOpen,
+    scrollToSectionById,
     topbarMode,
     setActiveSection,
     setIsNavOpen,
@@ -94,17 +95,17 @@ export default function HomePage() {
   const shouldHideFloatingContact =
     !isCompactViewport || isContactSectionVisible || (isNavOpen && isCompactViewport);
 
-  function handleNavLinkClick(targetHref) {
+  function handleNavLinkClick(event, targetHref) {
+    event.preventDefault();
     trackEvent('nav_link_click', { target: targetHref });
-    setActiveSection(targetHref.replace('#', ''));
+    const sectionId = targetHref.replace('#', '');
+    setActiveSection(sectionId);
     setIsNavOpen(false);
+    scrollToSectionById(sectionId);
   }
 
   function scrollToContact() {
-    const contactSection = document.getElementById(CONTACT_SECTION.id);
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    scrollToSectionById(CONTACT_SECTION.id);
   }
 
   return (

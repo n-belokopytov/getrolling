@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useActiveSection } from './use-active-section';
-import { useTopbarMode } from './use-topbar-mode';
+import { TOPBAR_EXPAND_SCROLL_Y, useTopbarMode } from './use-topbar-mode';
 
 const FALLBACK_COMPACT_BREAKPOINT = 1024;
+const PROGRAMMATIC_SCROLL_SKIP_CLEAR_MS = 800;
 
 function getCompactBreakpoint() {
   const rootStyles = getComputedStyle(document.documentElement);
@@ -19,7 +20,64 @@ export function useTopbarNavigation({ navLinks, headerRef, navRef, navToggleRef 
     [navLinks],
   );
   const { activeSection, setActiveSection } = useActiveSection({ headerRef, navSectionIds });
-  const topbarMode = useTopbarMode();
+  const skipMinimizeScrollCompensationRef = useRef(false);
+  const endProgrammaticScrollRef = useRef(null);
+  const { topbarMode, prepareProgrammaticScroll } =
+    useTopbarMode(skipMinimizeScrollCompensationRef);
+
+  const scrollToSectionById = useCallback(
+    (id) => {
+      endProgrammaticScrollRef.current?.();
+
+      const lockCompensation = window.scrollY <= TOPBAR_EXPAND_SCROLL_Y;
+      skipMinimizeScrollCompensationRef.current = lockCompensation;
+
+      if (lockCompensation) {
+        prepareProgrammaticScroll();
+      }
+
+      const runScroll = () => {
+        const target = document.getElementById(id);
+        if (!target) {
+          skipMinimizeScrollCompensationRef.current = false;
+          return;
+        }
+
+        const { pathname, search } = window.location;
+        window.history.pushState(null, '', `${pathname}${search}#${id}`);
+
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        const scrollRoot = document.documentElement;
+        let done = false;
+        const finish = () => {
+          if (done) return;
+          done = true;
+          skipMinimizeScrollCompensationRef.current = false;
+          scrollRoot.removeEventListener('scrollend', onScrollEnd);
+          window.clearTimeout(fallbackTimer);
+          endProgrammaticScrollRef.current = null;
+        };
+
+        function onScrollEnd() {
+          finish();
+        }
+
+        const fallbackTimer = window.setTimeout(finish, PROGRAMMATIC_SCROLL_SKIP_CLEAR_MS);
+        scrollRoot.addEventListener('scrollend', onScrollEnd);
+        endProgrammaticScrollRef.current = finish;
+      };
+
+      if (lockCompensation) {
+        window.requestAnimationFrame(() => {
+          window.requestAnimationFrame(runScroll);
+        });
+      } else {
+        runScroll();
+      }
+    },
+    [prepareProgrammaticScroll],
+  );
 
   useEffect(() => {
     if (!isNavOpen) return undefined;
@@ -132,6 +190,7 @@ export function useTopbarNavigation({ navLinks, headerRef, navRef, navToggleRef 
     activeSection,
     isCompactViewport,
     isNavOpen,
+    scrollToSectionById,
     topbarMode,
     setActiveSection,
     setIsNavOpen,

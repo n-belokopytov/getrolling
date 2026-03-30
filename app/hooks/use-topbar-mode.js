@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-const TOPBAR_MINIMIZE_SCROLL_Y = 24;
-const TOPBAR_EXPAND_SCROLL_Y = 0;
+export const TOPBAR_MINIMIZE_SCROLL_Y = 24;
+export const TOPBAR_EXPAND_SCROLL_Y = 0;
 const FALLBACK_TOPBAR_TRANSITION_MS = 220;
 
 function getTopbarTransitionMs() {
@@ -34,11 +34,12 @@ function getTopbarOffsetPx() {
   }
 }
 
-export function useTopbarMode() {
+export function useTopbarMode(skipMinimizeScrollCompensationRef) {
   const [topbarMode, setTopbarMode] = useState('expanded');
   const topbarModeRef = useRef('expanded');
   const isTopbarAnimatingRef = useRef(false);
   const animationUnlockTimeoutRef = useRef(null);
+  const prepareProgrammaticScrollRef = useRef(() => {});
 
   useEffect(() => {
     let frameId = null;
@@ -57,7 +58,8 @@ export function useTopbarMode() {
       }
       if (
         topbarModeRef.current === 'minimized' &&
-        latestScrollY <= TOPBAR_EXPAND_SCROLL_Y
+        latestScrollY <= TOPBAR_EXPAND_SCROLL_Y &&
+        !skipMinimizeScrollCompensationRef?.current
       ) {
         switchTopbarMode('expanded');
       }
@@ -77,7 +79,7 @@ export function useTopbarMode() {
     }
 
     function switchTopbarMode(nextMode) {
-      if (nextMode === 'minimized') {
+      if (nextMode === 'minimized' && !skipMinimizeScrollCompensationRef?.current) {
         const offset = getTopbarOffsetPx();
         if (offset > 0) {
           window.scrollTo({
@@ -106,7 +108,19 @@ export function useTopbarMode() {
     setTopbarMode(initialMode);
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
+
+    prepareProgrammaticScrollRef.current = () => {
+      if (isTopbarAnimatingRef.current) return;
+      if (
+        topbarModeRef.current === 'expanded' &&
+        window.scrollY <= TOPBAR_EXPAND_SCROLL_Y
+      ) {
+        switchTopbarMode('minimized');
+      }
+    };
+
     return () => {
+      prepareProgrammaticScrollRef.current = () => {};
       window.removeEventListener('scroll', handleScroll);
       if (frameId !== null) {
         window.cancelAnimationFrame(frameId);
@@ -115,7 +129,14 @@ export function useTopbarMode() {
         window.clearTimeout(animationUnlockTimeoutRef.current);
       }
     };
+  }, [skipMinimizeScrollCompensationRef]);
+
+  const prepareProgrammaticScroll = useCallback(() => {
+    prepareProgrammaticScrollRef.current();
   }, []);
 
-  return topbarMode;
+  return {
+    topbarMode,
+    prepareProgrammaticScroll,
+  };
 }

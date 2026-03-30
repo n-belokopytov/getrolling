@@ -87,7 +87,7 @@ export function Topbar({
             <a
               href={link.href}
               key={link.href}
-              onClick={() => onNavLinkClick(link.href)}
+              onClick={(event) => onNavLinkClick(event, link.href)}
               className={activeSection === link.href.replace('#', '') ? 'is-active' : ''}
               aria-current={
                 activeSection === link.href.replace('#', '') ? 'location' : undefined
